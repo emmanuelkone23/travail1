@@ -1,0 +1,6 @@
+{
+  "name": "Emmanuel Dashboard",
+  "description": "Tableau de bord personnel d'Emmanuel avec gestionnaire de tâches et citation inspirante",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,508 @@
+/* ==========================================================================
+   STYLE SHEET : MyDevDashboard (Inspiré du thème "CONVOKE" - Deep Violet & Gold)
+   Fichier : style.css
+   ========================================================================== */
+
+/* 0. TYPOGRAPHIE GOOGLE FONTS (Outfit : police géométrique, moderne et raffinée) */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+
+/* 1. RESET & VARIABLES GLOBALES */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Palette de couleurs signature "CONVOKE" (Violet profond, Électrique & Or solaire) */
+  --bg-dark-1: #3b0f94;            /* Violet royal vibrant */
+  --bg-dark-2: #24075c;            /* Violet profond */
+  --bg-dark-3: #120230;            /* Nuit indigo */
+  
+  /* Glassmorphism & Transparence */
+  --glass-card: rgba(28, 8, 66, 0.68);
+  --glass-card-border: rgba(255, 255, 255, 0.14);
+  --glass-input: rgba(18, 4, 45, 0.6);
+  --glass-item: rgba(255, 255, 255, 0.06);
+  --glass-item-hover: rgba(255, 255, 255, 0.12);
+  --glass-widget: rgba(19, 4, 48, 0.65);
+  
+  /* Accents de marque */
+  --accent-gold: #fbbf24;           /* Jaune solaire signature CONVOKE */
+  --accent-gold-hover: #f59e0b;     /* Jaune ambré au survol */
+  --accent-gold-glow: rgba(251, 191, 36, 0.35);
+  --accent-purple-glow: rgba(168, 85, 247, 0.35);
+  --text-dark: #19053b;             /* Texte sombre contrasté sur fond or */
+  
+  /* Couleurs de texte */
+  --text-primary: #ffffff;          /* Blanc pur éclatant */
+  --text-secondary: #e2d9f3;        /* Lavande clair doux */
+  --text-muted: #9d8ec2;            /* Lavande estompé */
+  
+  /* Boutons d'actions */
+  --btn-complete-bg: rgba(16, 185, 129, 0.18);
+  --btn-complete-border: rgba(52, 211, 153, 0.4);
+  --btn-complete-text: #6ee7b7;
+  --btn-complete-hover: #10b981;
+  
+  --btn-delete-bg: rgba(244, 63, 94, 0.18);
+  --btn-delete-border: rgba(251, 113, 133, 0.4);
+  --btn-delete-text: #fda4af;
+  --btn-delete-hover: #f43f5e;
+  
+  /* Géométrie & Ombres */
+  --radius-card: 22px;
+  --radius-input: 12px;
+  --radius-btn: 10px;
+  --shadow-main: 0 25px 60px -15px rgba(10, 2, 28, 0.85), 0 0 35px var(--accent-purple-glow);
+  --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 2. DISPOSITION GÉNÉRALE & FOND GÉOMÉTRIQUE CONVOKE */
+body {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: 
+    radial-gradient(circle at 85% 15%, rgba(192, 132, 252, 0.35) 0%, transparent 45%),
+    radial-gradient(circle at 15% 85%, rgba(251, 191, 36, 0.18) 0%, transparent 40%),
+    linear-gradient(135deg, var(--bg-dark-1) 0%, var(--bg-dark-2) 50%, var(--bg-dark-3) 100%);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  position: relative;
+  overflow-x: hidden;
+  letter-spacing: 0.01em;
+}
+
+/* Facettes angulaires et géométriques en arrière-plan (style bannière/conférence) */
+body::before {
+  content: "";
+  position: fixed;
+  top: -15%;
+  right: -10%;
+  width: 580px;
+  height: 580px;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(236, 72, 153, 0.12));
+  clip-path: polygon(0 0, 100% 0, 100% 65%, 25% 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  bottom: -15%;
+  left: -10%;
+  width: 520px;
+  height: 520px;
+  background: linear-gradient(45deg, rgba(99, 102, 241, 0.22), rgba(251, 191, 36, 0.08));
+  clip-path: polygon(25% 0, 100% 30%, 75% 100%, 0 75%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 3. CARTE PRINCIPALE (DASHBOARD GLASSMORPHISM) */
+.dashboard-card {
+  position: relative;
+  z-index: 1;
+  background-color: var(--glass-card);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  width: 100%;
+  max-width: 520px;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-main);
+  border: 1px solid var(--glass-card-border);
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  transition: var(--transition);
+}
+
+/* Effet de liseré supérieur lumineux */
+.dashboard-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+  border-radius: 2px;
+}
+
+/* 4. EN-TÊTE : LOGO STYLE CONVOKE & DATE */
+header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Titre principal avec accentuation jaune */
+header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-transform: uppercase;
+}
+
+header h1 span.brand-gold {
+  color: var(--accent-gold);
+}
+
+#current-date {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 16px;
+  border-radius: 20px;
+  display: inline-block;
+  letter-spacing: 0.01em;
+}
+
+/* 5. FORMULAIRE D'AJOUT DE TÂCHE AVEC EFFET FLOU (FROSTED GLASS) */
+.task-form {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 8px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.25);
+  transition: var(--transition);
+}
+
+.task-form:focus-within {
+  border-color: rgba(251, 191, 36, 0.4);
+  box-shadow: 0 8px 28px -2px rgba(251, 191, 36, 0.15);
+}
+
+#task-input {
+  flex: 1;
+  padding: 14px 18px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  font-weight: 500;
+  color: var(--text-primary);
+  background-color: rgba(18, 4, 45, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-input);
+  outline: none;
+  transition: var(--transition);
+}
+
+#task-input::placeholder {
+  color: var(--text-muted);
+}
+
+#task-input:focus {
+  border-color: var(--accent-gold);
+  background-color: rgba(20, 5, 50, 0.7);
+  box-shadow: 0 0 0 3px var(--accent-gold-glow);
+}
+
+/* Bouton d'action "Ajouter" couleur jaune d'or CONVOKE */
+#add-task-btn {
+  padding: 14px 24px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--text-dark);
+  background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-hover) 100%);
+  border: none;
+  border-radius: var(--radius-input);
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 6px 18px var(--accent-gold-glow);
+  white-space: nowrap;
+}
+
+#add-task-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(251, 191, 36, 0.5);
+  filter: brightness(1.06);
+}
+
+#add-task-btn:active {
+  transform: translateY(0);
+}
+
+/* 6. LISTE DES TÂCHES */
+.task-section {
+  width: 100%;
+}
+
+#task-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 330px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* Barre de défilement violette stylisée */
+#task-list::-webkit-scrollbar {
+  width: 6px;
+}
+#task-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+#task-list::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+#task-list::-webkit-scrollbar-thumb:hover {
+  background-color: var(--accent-gold);
+}
+
+/* Élément de tâche individuel en verre */
+#task-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  background-color: var(--glass-item);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-btn);
+  padding: 14px 16px;
+  transition: var(--transition);
+}
+
+#task-list li:hover {
+  background-color: var(--glass-item-hover);
+  border-color: rgba(251, 191, 36, 0.35);
+  transform: translateX(2px);
+}
+
+/* Libellé de la tâche */
+.task-text {
+  flex: 1;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  word-break: break-word;
+  text-align: left;
+  line-height: 1.4;
+  transition: var(--transition);
+}
+
+/* Tâche terminée */
+#task-list li.completed {
+  opacity: 0.55;
+  background-color: rgba(10, 2, 28, 0.4);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+#task-list li.completed .task-text {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+/* Boutons d'actions */
+.task-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.task-btn {
+  padding: 7px 14px;
+  font-size: 0.78rem;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+/* Bouton "Terminer" */
+.btn-complete {
+  background-color: var(--btn-complete-bg);
+  color: var(--btn-complete-text);
+  border: 1px solid var(--btn-complete-border);
+}
+
+.btn-complete:hover {
+  background-color: var(--btn-complete-hover);
+  color: #ffffff;
+  border-color: var(--btn-complete-hover);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+/* Bouton "Supprimer" */
+.btn-delete {
+  background-color: var(--btn-delete-bg);
+  color: var(--btn-delete-text);
+  border: 1px solid var(--btn-delete-border);
+}
+
+.btn-delete:hover {
+  background-color: var(--btn-delete-hover);
+  color: #ffffff;
+  border-color: var(--btn-delete-hover);
+  box-shadow: 0 4px 12px rgba(244, 63, 94, 0.4);
+}
+
+.task-btn:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 1px;
+}
+
+/* 7. ASIDE : WIDGET CITATION DÉFILANTE (TICKER / MARQUEE) */
+#widget-container {
+  background-color: var(--glass-widget);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: var(--radius-btn);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 10px 14px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(10, 2, 28, 0.4);
+}
+
+.quote-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-gold);
+  background: rgba(251, 191, 36, 0.12);
+  border: 1px solid rgba(251, 191, 36, 0.28);
+  padding: 4px 10px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.marquee-track {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  white-space: nowrap;
+  mask-image: linear-gradient(90deg, transparent 0%, black 4%, black 96%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 4%, black 96%, transparent 100%);
+}
+
+#quote-text {
+  display: inline-block;
+  white-space: nowrap;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  padding-left: 100%;
+  animation: marqueeScroll 40s linear infinite;
+  will-change: transform;
+}
+
+/* Pause lors du survol de la citation */
+#widget-container:hover #quote-text {
+  animation-play-state: paused;
+  cursor: pointer;
+}
+
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* 8. ADAPTATIVITÉ MOBILE */
+@media (max-width: 600px) {
+  body {
+    padding: 18px 12px;
+  }
+
+  .dashboard-card {
+    padding: 26px 20px;
+    gap: 20px;
+  }
+
+  header h1 {
+    font-size: 1.6rem;
+  }
+
+  #current-date {
+    font-size: 0.82rem;
+    padding: 5px 12px;
+  }
+
+  .task-form {
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  #task-input,
+  #add-task-btn {
+    width: 100%;
+  }
+
+  #add-task-btn {
+    padding: 13px;
+  }
+
+  #task-list li {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .task-btn {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+  }
+
+  #widget-container {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .quote-label {
+    font-size: 0.68rem;
+    padding: 3px 7px;
+  }
+
+  #quote-text {
+    font-size: 0.82rem;
+  }
+}

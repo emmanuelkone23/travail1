@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Emmanuel Dashboard</title>
+    <meta name="description" content="Tableau de bord personnel d'Emmanuel avec gestionnaire de tâches et citations inspirantes." />
+    <meta property="og:title" content="Emmanuel Dashboard" />
+    <meta property="og:description" content="Tableau de bord personnel d'Emmanuel avec gestionnaire de tâches et citations inspirantes." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <main class="dashboard-card" id="dashboard-card">
+      <header>
+        <h1>Emmanuel <span class="brand-gold">Dashboard</span></h1>
+        <p id="current-date"></p>
+      </header>
+
+      <section class="task-form">
+        <input 
+          type="text" 
+          id="task-input" 
+          placeholder="Ajouter une nouvelle tâche..." 
+          autocomplete="off" 
+        />
+        <button id="add-task-btn">Ajouter</button>
+      </section>
+
+      <section class="task-section">
+        <ul id="task-list"></ul>
+      </section>
+
+      <!-- Widget secondaire : Citation inspirante défilante -->
+      <aside id="widget-container" title="Survolez pour mettre en pause le défilement">
+        <span class="quote-label">Citation</span>
+        <div class="marquee-track">
+          <p id="quote-text"></p>
+        </div>
+      </aside>
+    </main>
+
+    <script src="/script.js"></script>
+  </body>
+</html>
+
